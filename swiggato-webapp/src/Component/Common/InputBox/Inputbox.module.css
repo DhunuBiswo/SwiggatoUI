@@ -1,0 +1,15 @@
+.custom_input {
+  border: none;
+  outline: none;
+}
+.custom_input:focus {
+  border: none;
+  outline: none;
+}
+.new_input {
+  border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  border-radius: 5px;
+}
