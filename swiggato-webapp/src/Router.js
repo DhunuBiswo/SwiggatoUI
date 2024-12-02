@@ -7,9 +7,9 @@ import Forgotpass from "./Component/Forgotpass/Forgotpass";
 function Router() {
   return (
     <Routes>
-      <Route path="/" element={<Home />}></Route>
+      <Route path="/" element={<Login />}></Route>
       <Route path="signup" element={<Signup />}></Route>
-      <Route path="login" element={<Login />}></Route>
+      <Route path="home" element={<Home />}></Route>
       <Route path="forgotpass" element={<Forgotpass />}></Route>
     </Routes>
   );
