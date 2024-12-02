@@ -8,15 +8,19 @@ import { BrowserRouter } from "react-router-dom";
 import "primeflex/primeflex.css";
 import "primereact/resources/primereact.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
+import { Provider } from "react-redux";
+import { store } from "./Redux/Store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <PrimeReactProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </PrimeReactProvider>
+    <Provider store={store}>
+      <PrimeReactProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </PrimeReactProvider>
+    </Provider>
   </React.StrictMode>
 );
 
