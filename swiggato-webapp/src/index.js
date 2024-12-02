@@ -5,6 +5,9 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { PrimeReactProvider } from "primereact/api";
 import { BrowserRouter } from "react-router-dom";
+import "primeflex/primeflex.css";
+import "primereact/resources/primereact.css";
+import "primereact/resources/themes/lara-light-indigo/theme.css";
 import { Provider } from "react-redux";
 import { store } from "./Redux/Store";
 

@@ -3,6 +3,7 @@ import styles from "./Signup.module.css";
 import swigatoLogo from "../../Assets/Images/IMG-20241125-WA0021.jpg";
 import { Link } from "react-router-dom";
 import InputBox from "../Common/InputBox/InputBox";
+import { Button } from "primereact/button";
 function Signup() {
   const signUp = (e) => {
     e.preventDefault();
@@ -14,7 +15,7 @@ function Signup() {
         <img src={swigatoLogo} className={styles.logo_img} />
       </div>
       <div className={styles["form-container"]}>
-        <h2>Welcome to Swiggato</h2>
+        <h2 className={["welcome"]}>Welcome to Swiggato</h2>
         <form onSubmit={signUp}>
           <div className={styles["input-field"]}>
             <label>First Name:</label>
@@ -65,19 +66,20 @@ function Signup() {
               showeye={true}
             />
           </div>
-          <button type="submit" className={styles["btn"]}>
-            Create Account
-          </button>
+          <div>
+            <Button
+              label="Reset"
+              severity="secondary"
+              style={{ marginRight: "10px" }}
+            />
+            <Button label="Submit" style={{ marginLeft: "10px" }} />
+          </div>
         </form>
 
         <div className={styles["account-link"]}>
           <p>
             Already have an account? <Link to="/login">Login</Link>
           </p>
-        </div>
-
-        <div className={styles["forgot-password-link"]}>
-          <Link to="/forgot-password">Forgot your password?</Link>
         </div>
       </div>
     </div>
