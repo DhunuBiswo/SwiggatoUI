@@ -1,5 +1,5 @@
-import loginReducer from "../Component/Login/LoginReducer";
+import formReducer from "./Reducers/FormReducers";
 import { combineReducers } from "@reduxjs/toolkit";
 export default combineReducers({
-  loginReducer,
+  formReducer,
 });
