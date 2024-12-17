@@ -1,0 +1,40 @@
+.welcome {
+  margin-top: 100px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.form-container {
+  display: flex;
+  flex-direction: column;
+  border: 2px;
+  width: 50%;
+  padding: 5%;
+}
+.input-field {
+  margin-bottom: 15px;
+}
+.input-field label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-align: start;
+}
+.input-field input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+}
+.account-link a {
+  color: #4caf50;
+  text-decoration: none;
+}
+.account-link a:hover {
+  text-decoration: underline;
+}
+.logo_img {
+  width: 100%;
+  height: 100vh;
+}
+.login_buttons button span {
+  font-weight: 500;
+}
