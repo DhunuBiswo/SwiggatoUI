@@ -54,15 +54,16 @@ function Signup() {
 
       let response = await CommonServices.validateOtp(otpPayload);
       if (!response.isAxiosError) {
-        if (response.data.Success) {
+        if (response.data.success) {
           setValidateOtp(false);
           action({ type: "onFormClear" });
           setShowResultPopUp(true);
+        } else {
+          setWrongotp(true);
         }
-      } else {
-        setWrongotp(true);
       }
     } catch (error) {
+      console.log(error);
     } finally {
       setLoader(false);
     }
@@ -105,6 +106,7 @@ function Signup() {
         showResultPopUp={showResultPopUp}
         message="Account Has Been Created Successfully. Please Login."
         redirecturl="/login"
+        setShowResultPopUp={setShowResultPopUp}
       />
       <div className="flex">
         <div>

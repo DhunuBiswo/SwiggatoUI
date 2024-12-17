@@ -78,8 +78,8 @@ function ForgotPassword({ showForgot, setShowForgot }) {
       });
       if (!response.isAxiosError) {
         setShowSection({
-          emailfeild: false,
-          optfeild: true,
+          emailfeild: true,
+          optfeild: false,
           passwordfeild: false,
         });
         setShowForgot(false);
@@ -189,7 +189,12 @@ function ForgotPassword({ showForgot, setShowForgot }) {
             }
             severity="help"
             style={{ marginRight: "5px" }}
-            // disabled={token.length !== 6}
+            // disabled={
+            //   email === "" ||
+            //   token.length !== 6 ||
+            //   passwords.password === "" ||
+            //   passwords.confirmPassword === ""
+            // }
             onClick={() => buttonHandler()}
           />
           <Button
