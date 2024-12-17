@@ -6,9 +6,9 @@ import Login from "./Component/Login/Login";
 function Router() {
   return (
     <Routes>
-      <Route path="/" element={<Login />}></Route>
+      <Route path="/login" element={<Login />}></Route>
       <Route path="signup" element={<Signup />}></Route>
-      <Route path="home" element={<Home />}></Route>
+      <Route path="/" element={<Home />}></Route>
     </Routes>
   );
 }

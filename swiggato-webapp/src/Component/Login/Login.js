@@ -5,21 +5,63 @@ import { Button } from "primereact/button";
 import InputBox from "../Common/InputBox/InputBox";
 import { Dialog } from "primereact/dialog";
 import { useState } from "react";
-import { InputOtp } from "primereact/inputotp";
-
+import { useDispatch, useSelector } from "react-redux";
+import CommonServices from "../../Services/CommonServices";
+import { useNavigate } from "react-router-dom";
+import { ProgressSpinner } from "primereact/progressspinner";
+import { BlockUI } from "primereact/blockui";
+import ForgotPassword from "../Common/OtpValidator/ForgotPassword";
 function Login() {
-  const login = (e) => {
-    e.preventDefault();
-    console.log("login");
+  const navigate = useNavigate();
+  const [loader, setLoader] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [showForgot, setShowForgot] = useState(false);
+  const loginSubmitted = async (e) => {
+    try {
+      setLoader(true);
+      setIsError(false);
+      e.preventDefault();
+      let loginPayload = {
+        email: formData.email,
+        password: formData.password,
+      };
+      let response = await CommonServices.login(loginPayload);
+      if (!response.isAxiosError) {
+        if (response.data.success) {
+          localStorage.setItem("token", response.data.jwtToken);
+          navigate("/");
+        }
+      } else {
+        setIsError(true);
+      }
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoader(false);
+    }
   };
-  const [visible, setVisible] = useState(false);
-  const [token, setTokens] = useState();
+  const action = useDispatch();
+  const formData = useSelector((state) => state.formReducer);
+  const updateDetails = (type, value) => {
+    action({
+      type: "singleUpdate",
+      payload: {
+        name: type,
+        value: value,
+      },
+    });
+  };
+  const updateFormdata = (type, value) => {
+    updateDetails(type, value);
+  };
   return (
-    <>
+    <BlockUI blocked={loader} template={<ProgressSpinner />}>
+      <ForgotPassword showForgot={showForgot} setShowForgot={setShowForgot} />
       <div className="flex">
         <div className={styles["form-container"]}>
           <h2 className={styles["welcome"]}>Welcome to Swiggato</h2>
-          <form>
+          <form onSubmit={loginSubmitted}>
             <div className={styles["input-field"]}>
               <label>Email:</label>
               <InputBox
@@ -27,6 +69,9 @@ function Login() {
                 required={true}
                 logo="email"
                 placeHolder="Enter Email"
+                value={formData.email}
+                updateFormdata={updateFormdata}
+                reduxKey="email"
               />
             </div>
             <div className={styles["input-field"]}>
@@ -37,71 +82,40 @@ function Login() {
                 logo="pass"
                 placeHolder="Enter Password"
                 showeye={true}
+                value={formData.password}
+                updateFormdata={updateFormdata}
+                reduxKey="password"
               />
             </div>
+            {isError && (
+              <h5 className="error-messge">
+                Enter valid Username and Password
+              </h5>
+            )}
             <Button label="Submit" />
           </form>
-
           <div className={styles.login_buttons}>
             <div>
-              <Button label="Create Account" link />
+              <Button
+                label="Create Account"
+                link
+                onClick={() => navigate("/signup")}
+              />
             </div>
             <div>
               <Button
                 label="Forgot your password?"
                 link
-                onClick={() => setVisible(true)}
+                onClick={() => setShowForgot(true)}
               />
-              <Dialog
-                header="Reset password"
-                visible={visible}
-                style={{ width: "50vw" }}
-                onHide={() => {
-                  if (!visible) return;
-                  setVisible(false);
-                }}
-              >
-                <div className={styles["input-field"]}>
-                  <InputBox
-                    type="email"
-                    required={true}
-                    logo="email"
-                    placeHolder="Enter your registered mail id to recieve the OTP."
-                  />
-                </div>
-                <div>
-                  <Button label="Send OTP" style={{ float: "right" }} />
-                </div>
-                <div className="card flex justify-content-center">
-                  <InputOtp
-                    value={token}
-                    onChange={(e) => setTokens(e.value)}
-                    mask
-                    integerOnly
-                    length={6}
-                  />
-                </div>
-                <div style={{ textAlign: "center", marginTop: "10px" }}>
-                  <Button
-                    label="Submit OTP"
-                    severity="help"
-                    style={{ marginRight: "5px" }}
-                  />
-                  <Button
-                    label="Resend OTP"
-                    severity="secondary"
-                    style={{ marginLeft: "5px" }}
-                  />
-                </div>
-              </Dialog>
             </div>
           </div>
         </div>
         <div style={{ width: "110%" }}>
-          <img src={swigatoLogo} className={styles.logo_img} />
+          <img src={swigatoLogo} className={styles.logo_img} alt="swiggato" />
         </div>
       </div>
-    </>
+    </BlockUI>
   );
 }
 

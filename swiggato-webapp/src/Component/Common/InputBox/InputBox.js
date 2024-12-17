@@ -6,19 +6,31 @@ import {
   faLock,
   faEye,
   faEyeSlash,
+  faMobile,
 } from "@fortawesome/free-solid-svg-icons";
 import style from "./Inputbox.module.css";
-
-function InputBox({ type, required, logo, placeHolder, showeye }) {
-  const [inputType, setInputType] = useState(type); // State for managing input type
-
+function InputBox({
+  type,
+  required,
+  logo,
+  placeHolder,
+  showeye,
+  value,
+  updateFormdata,
+  reduxKey,
+}) {
+  const [inputType, setInputType] = useState(type);
   const findLogo = (logo) => {
     const iconList = {
       user: faSignature,
       email: faEnvelope,
       pass: faLock,
+      mobile: faMobile,
     };
     return iconList[logo];
+  };
+  const onChangeHandler = (e) => {
+    updateFormdata(reduxKey, e.target.value);
   };
 
   const togglePasswordVisibility = () => {
@@ -33,6 +45,8 @@ function InputBox({ type, required, logo, placeHolder, showeye }) {
         placeholder={placeHolder || "Type"}
         className={style.custom_input}
         required={required}
+        value={value}
+        onChange={(e) => onChangeHandler(e)}
       />
       {showeye && (
         <FontAwesomeIcon
