@@ -14,6 +14,7 @@ function OtpValidator({
       header="Enter Signup OTP"
       visible={validateOtp}
       style={{ width: "50vw" }}
+      breakpoints={{ "960px": "75vw", "641px": "100vw" }}
       onHide={() => {
         setValidateOtp(false);
       }}

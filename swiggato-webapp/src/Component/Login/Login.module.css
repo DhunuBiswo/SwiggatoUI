@@ -3,6 +3,21 @@
   margin-bottom: 20px;
   text-align: center;
 }
+@media (max-width: 1024px) {
+  .form-container {
+    width: 100% !important;
+    background-image: url("../../Assets/Images/blur\ image.jpg");
+    background-size: cover;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .image-container {
+    display: none;
+  }
+}
+
 .form-container {
   display: flex;
   flex-direction: column;

@@ -111,7 +111,7 @@ function Login() {
             </div>
           </div>
         </div>
-        <div style={{ width: "110%" }}>
+        <div style={{ width: "50%" }} className={styles["image-container"]}>
           <img src={swigatoLogo} className={styles.logo_img} alt="swiggato" />
         </div>
       </div>
