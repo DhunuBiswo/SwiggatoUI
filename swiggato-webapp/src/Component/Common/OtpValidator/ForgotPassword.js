@@ -118,6 +118,7 @@ function ForgotPassword({ showForgot, setShowForgot }) {
         }
         visible={showForgot}
         style={{ width: "50vw" }}
+        breakpoints={{ "960px": "75vw", "641px": "100vw" }}
         onHide={() => {
           setShowForgot(false);
         }}

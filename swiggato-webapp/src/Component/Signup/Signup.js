@@ -109,7 +109,7 @@ function Signup() {
         setShowResultPopUp={setShowResultPopUp}
       />
       <div className="flex">
-        <div>
+        <div className={styles["image-container"]}>
           <img src={swigatoLogo} className={styles.logo_img} />
         </div>
         <div className={styles["form-container"]}>
