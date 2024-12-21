@@ -18,6 +18,8 @@ function InputBox({
   value,
   updateFormdata,
   reduxKey,
+  label,
+  isMandatory = true,
 }) {
   const [inputType, setInputType] = useState(type);
   const findLogo = (logo) => {
@@ -38,23 +40,29 @@ function InputBox({
   };
 
   return (
-    <div className={style.new_input}>
-      <FontAwesomeIcon icon={findLogo(logo)} style={{ padding: "10px" }} />
-      <input
-        type={inputType}
-        placeholder={placeHolder || "Type"}
-        className={style.custom_input}
-        required={required}
-        value={value}
-        onChange={(e) => onChangeHandler(e)}
-      />
-      {showeye && (
-        <FontAwesomeIcon
-          icon={inputType === "text" ? faEyeSlash : faEye}
-          onClick={togglePasswordVisibility}
+    <>
+      <label>
+        {label}
+        {isMandatory && <span className="error-messge"> *</span>}
+      </label>
+      <div className={style.new_input}>
+        <FontAwesomeIcon icon={findLogo(logo)} style={{ padding: "10px" }} />
+        <input
+          type={inputType}
+          placeholder={placeHolder || "Type"}
+          className={style.custom_input}
+          required={required}
+          value={value}
+          onChange={(e) => onChangeHandler(e)}
         />
-      )}
-    </div>
+        {showeye && (
+          <FontAwesomeIcon
+            icon={inputType === "text" ? faEyeSlash : faEye}
+            onClick={togglePasswordVisibility}
+          />
+        )}
+      </div>
+    </>
   );
 }
 

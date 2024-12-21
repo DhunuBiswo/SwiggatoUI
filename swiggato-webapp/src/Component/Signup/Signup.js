@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Signup.module.css";
 import swigatoLogo from "../../Assets/Images/IMG-20241125-WA0021.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import InputBox from "../Common/InputBox/InputBox";
 import { Button } from "primereact/button";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,12 +14,21 @@ import { BlockUI } from "primereact/blockui";
 import OtpValidator from "../Common/OtpValidator/OtpValidator";
 import CommonServices from "../../Services/CommonServices";
 import SwiggatoDialog from "../Common/SwiggatoDialog/SwiggatoDialog";
+import { RadioButton } from "primereact/radiobutton";
 function Signup() {
   const [passwordMatcher, setPasswordMatcher] = useState(false);
   const [loader, setLoader] = useState(false);
   const [validateOtp, setValidateOtp] = useState(false);
   const [showResultPopUp, setShowResultPopUp] = useState(false);
   const [wrongotp, setWrongotp] = useState(false);
+  const navigate = useNavigate();
+  useEffect(() => {
+    action({ type: "onFormClear" });
+    if (localStorage.getItem("token")) {
+      navigate("/");
+    }
+  }, []);
+
   const signUp = async (e) => {
     try {
       e.preventDefault();
@@ -27,7 +36,7 @@ function Signup() {
       let signupPayload = {
         email: formData.email,
         password: formData.password,
-        role: "User",
+        role: formData.role,
         firstName: formData.firstName,
         lastName: formData.lastname,
         phoneNumber: formData.mobile,
@@ -93,6 +102,15 @@ function Signup() {
   const getOtp = (otp) => {
     OtpValidation(otp);
   };
+  const role = (val) => {
+    action({
+      type: "singleUpdate",
+      payload: {
+        name: "role",
+        value: val,
+      },
+    });
+  };
 
   return (
     <BlockUI blocked={loader} template={<ProgressSpinner />}>
@@ -110,13 +128,16 @@ function Signup() {
       />
       <div className="flex">
         <div className={styles["image-container"]}>
-          <img src={swigatoLogo} className={styles.logo_img} />
+          <img
+            src={swigatoLogo}
+            className={styles.logo_img}
+            alt="swiggato-logo"
+          />
         </div>
         <div className={styles["form-container"]}>
           <h2 className={["welcome"]}>Welcome to Swiggato</h2>
           <form onSubmit={signUp}>
             <div className={styles["input-field"]}>
-              <label>First Name:</label>
               <InputBox
                 type="text"
                 required={true}
@@ -125,10 +146,10 @@ function Signup() {
                 updateFormdata={updateFormdata}
                 reduxKey="firstName"
                 value={formData.firstName}
+                label="First Name"
               />
             </div>
             <div className={styles["input-field"]}>
-              <label>Last Name:</label>
               <InputBox
                 type="text"
                 required={true}
@@ -137,10 +158,10 @@ function Signup() {
                 updateFormdata={updateFormdata}
                 reduxKey="lastname"
                 value={formData.lastname}
+                label="Last Name"
               />
             </div>
             <div className={styles["input-field"]}>
-              <label>Email:</label>
               <InputBox
                 type="email"
                 required={true}
@@ -149,10 +170,10 @@ function Signup() {
                 updateFormdata={updateFormdata}
                 reduxKey="email"
                 value={formData.email}
+                label="Email"
               />
             </div>
             <div className={styles["input-field"]}>
-              <label>Mobile:</label>
               <InputBox
                 type="text"
                 required={true}
@@ -161,11 +182,49 @@ function Signup() {
                 updateFormdata={updateFormdata}
                 reduxKey="mobile"
                 value={formData.mobile}
+                label="Mobile"
               />
+            </div>
+            <div className={styles.radio_button}>
+              <div>
+                <RadioButton
+                  inputId="user"
+                  name="pizza"
+                  value="user"
+                  onChange={(e) => role(e.value)}
+                  checked={formData.role === "user"}
+                />
+                <label htmlFor="user" className="ml-2">
+                  User
+                </label>
+              </div>
+              <div>
+                <RadioButton
+                  inputId="resturant"
+                  name="pizza"
+                  value="owner"
+                  onChange={(e) => role(e.value)}
+                  checked={formData.role === "owner"}
+                />
+                <label htmlFor="resturant" className="ml-2">
+                  Register Your Resturant
+                </label>
+              </div>
+              <div>
+                <RadioButton
+                  inputId="captain"
+                  name="pizza"
+                  value="deliveryboy"
+                  onChange={(e) => role(e.value)}
+                  checked={formData.role === "deliveryboy"}
+                />
+                <label htmlFor="captain" className="ml-2">
+                  Be our Delivery Captain
+                </label>
+              </div>
             </div>
 
             <div className={styles["input-field"]}>
-              <label>Password:</label>
               <InputBox
                 type="password"
                 required={true}
@@ -175,11 +234,11 @@ function Signup() {
                 updateFormdata={updateFormdata}
                 reduxKey="password"
                 value={formData.password}
+                label="Password"
               />
             </div>
 
             <div className={styles["input-field"]}>
-              <label>Confirm Password:</label>
               <InputBox
                 type="password"
                 required={true}
@@ -189,6 +248,7 @@ function Signup() {
                 updateFormdata={updateFormdata}
                 reduxKey="confirmPassword"
                 value={formData.confirmPassword}
+                label="Confirm Password"
               />
               {passwordMatcher && (
                 <h6 className="error-messge">Confirm Password Not Matching</h6>
