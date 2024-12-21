@@ -5,6 +5,7 @@ const initialState = {
   lastname: "",
   confirmPassword: "",
   mobile: "",
+  role: "user",
 };
 
 export default function formReducer(state = initialState, action) {
@@ -19,6 +20,7 @@ export default function formReducer(state = initialState, action) {
         lastname: "",
         confirmPassword: "",
         mobile: "",
+        role: "user",
       };
 
     default:

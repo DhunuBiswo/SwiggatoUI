@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./Login.module.css";
 import swigatoLogo from "../../Assets/Images/IMG-20241125-WA0021.jpg";
 import { Button } from "primereact/button";
 import InputBox from "../Common/InputBox/InputBox";
-import { Dialog } from "primereact/dialog";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CommonServices from "../../Services/CommonServices";
@@ -16,6 +15,13 @@ function Login() {
   const [loader, setLoader] = useState(false);
   const [isError, setIsError] = useState(false);
   const [showForgot, setShowForgot] = useState(false);
+  useEffect(() => {
+    action({ type: "onFormClear" });
+    // localStorage.removeItem("token");
+    if (localStorage.getItem("token")) {
+      navigate("/");
+    }
+  }, []);
   const loginSubmitted = async (e) => {
     try {
       setLoader(true);
@@ -63,7 +69,6 @@ function Login() {
           <h2 className={styles["welcome"]}>Welcome to Swiggato</h2>
           <form onSubmit={loginSubmitted}>
             <div className={styles["input-field"]}>
-              <label>Email:</label>
               <InputBox
                 type="email"
                 required={true}
@@ -72,10 +77,10 @@ function Login() {
                 value={formData.email}
                 updateFormdata={updateFormdata}
                 reduxKey="email"
+                label="Email"
               />
             </div>
             <div className={styles["input-field"]}>
-              <label>Password:</label>
               <InputBox
                 type="password"
                 required={true}
@@ -85,12 +90,11 @@ function Login() {
                 value={formData.password}
                 updateFormdata={updateFormdata}
                 reduxKey="password"
+                label="Password"
               />
             </div>
             {isError && (
-              <h5 className="error-messge">
-                Enter valid Username and Password
-              </h5>
+              <h5 className="error-messge">Enter valid Username or Password</h5>
             )}
             <Button label="Submit" />
           </form>
