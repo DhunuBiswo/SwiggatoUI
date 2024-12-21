@@ -7,8 +7,11 @@ const JwtMiddleware = axios.create({
 const requestHandler = (request) => {
   request.meta = request.meta || {};
   request.meta.requestStartedAt = new Date().getTime();
-  if (window.location.pathname !== "login") {
-    request.headers.Authorization = `Bearer`;
+  if (
+    window.location.pathname !== "login" &&
+    window.location.pathname !== "signup"
+  ) {
+    request.headers.Authorization = `Bearer ${localStorage.getItem("token")}`;
   }
   return request;
 };

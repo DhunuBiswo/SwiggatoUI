@@ -72,5 +72,16 @@ const CommonServices = {
         return err;
       });
   },
+  getUserprofile: async () => {
+    return JwtMiddleware.get(
+      `${process.env.REACT_APP_SWIGGATOBASEURL}users/profile`
+    )
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        return err;
+      });
+  },
 };
 export default CommonServices;
