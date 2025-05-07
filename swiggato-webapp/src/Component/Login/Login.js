@@ -29,12 +29,13 @@ function Login() {
       e.preventDefault();
       let loginPayload = {
         email: formData.email,
-        password: formData.password,
+        password: btoa(formData.password),
       };
       let response = await CommonServices.login(loginPayload);
       if (!response.isAxiosError) {
         if (response.data.success) {
-          localStorage.setItem("token", response.data.jwtToken);
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("user", response.data.email);
           navigate("/");
         }
       } else {

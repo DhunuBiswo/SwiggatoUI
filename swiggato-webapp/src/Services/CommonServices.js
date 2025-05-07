@@ -74,7 +74,9 @@ const CommonServices = {
   },
   getUserprofile: async () => {
     return JwtMiddleware.get(
-      `${process.env.REACT_APP_SWIGGATOBASEURL}users/profile`
+      `${
+        process.env.REACT_APP_SWIGGATOBASEURL
+      }users/profile?useremail=${localStorage.getItem("user")}`
     )
       .then((res) => {
         return res;

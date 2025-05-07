@@ -1,41 +1,50 @@
 import React from "react";
 import styles from "./Navbar.module.css";
+import swglogo from "../../../../src/Assets/Images/IMG-20241125-WA0021.jpg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCartShopping,
+  faHandshakeAngle,
+  faPercent,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 function Navbar() {
   return (
-    <>
-      <div className={styles.czzs}>vafsvushv</div>
-      <nav className="Swiggato">
-        <div className={styles.navbar_container}>
-          <input type="checkbox" name="" id=""></input>
-          <div class="hamburger-lines">
-            <span class="line line1"></span>
-            <span class="line line2"></span>
-            <span class="line line3"></span>
-          </div>
-          <ul class="menu-items">
-            <li>
-              <a href="#">Home</a>
-            </li>
-            <li>
-              <a href="#">About</a>
-            </li>
-            <li>
-              <a href="#">Category</a>
-            </li>
-            <li>
-              <a href="#">Menu</a>
-            </li>
-            <li>
-              <a href="#">Testimonial</a>
-            </li>
-            <li>
-              <a href="#">Contact</a>
-            </li>
-          </ul>
-          <h1 class="logo">Navbar</h1>
+    <nav className={styles.swnavbar}>
+      <div className={styles.fstdiv}>
+        <img
+          src={swglogo}
+          height={50}
+          width={50}
+          style={{ borderRadius: "50%" }}
+        />
+      </div>
+      <div className={styles.secdiv}>
+        <input type="text" placeholder="Search" />
+        <div>
+          <FontAwesomeIcon icon={faPercent} style={{ paddingRight: "10px" }} />
+          Offer
         </div>
-      </nav>
-    </>
+        <div>
+          <FontAwesomeIcon
+            icon={faHandshakeAngle}
+            style={{ paddingRight: "10px" }}
+          />
+          Help
+        </div>
+        <div>
+          <FontAwesomeIcon
+            icon={faCartShopping}
+            style={{ paddingRight: "10px" }}
+          />
+          Cart
+        </div>
+        <div>
+          <FontAwesomeIcon icon={faUser} style={{ paddingRight: "10px" }} />
+          {localStorage.getItem("user")}
+        </div>
+      </div>
+    </nav>
   );
 }
 
