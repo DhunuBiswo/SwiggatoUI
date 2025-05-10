@@ -7,6 +7,11 @@ import {
   faEye,
   faEyeSlash,
   faMobile,
+  faMapPin,
+  faLocationCrosshairs,
+  faMapLocationDot,
+  faFolderOpen,
+  faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 import style from "./Inputbox.module.css";
 function InputBox({
@@ -20,6 +25,7 @@ function InputBox({
   reduxKey,
   label,
   isMandatory = true,
+  disableit = false,
 }) {
   const [inputType, setInputType] = useState(type);
   const findLogo = (logo) => {
@@ -28,11 +34,18 @@ function InputBox({
       email: faEnvelope,
       pass: faLock,
       mobile: faMobile,
+      city: faMapPin,
+      location: faLocationCrosshairs,
+      address: faMapLocationDot,
+      photo: faFolderOpen,
     };
     return iconList[logo];
   };
   const onChangeHandler = (e) => {
-    updateFormdata(reduxKey, e.target.value);
+    updateFormdata(
+      reduxKey,
+      inputType === "file" ? e.target.files[0] : e.target.value
+    );
   };
 
   const togglePasswordVisibility = () => {
@@ -54,6 +67,7 @@ function InputBox({
           required={required}
           value={value}
           onChange={(e) => onChangeHandler(e)}
+          disabled={disableit}
         />
         {showeye && (
           <FontAwesomeIcon

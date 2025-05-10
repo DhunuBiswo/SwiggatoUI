@@ -39,12 +39,12 @@ function Signup() {
         role: formData.role,
         firstName: formData.firstName,
         lastName: formData.lastname,
-        phoneNumber: formData.mobile,
+        phoneNumber: +formData.mobile,
       };
 
       let response = await CommonServices.signup(signupPayload);
       if (!response.isAxiosError) {
-        if (response.data.status === "Success") {
+        if (response.data.success) {
           setValidateOtp(true);
         }
       }
@@ -58,7 +58,7 @@ function Signup() {
       setLoader(true);
       let otpPayload = {
         email: formData.email,
-        otpCode: otp,
+        otp: otp,
       };
 
       let response = await CommonServices.validateOtp(otpPayload);

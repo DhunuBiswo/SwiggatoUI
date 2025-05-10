@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-family: "DM Sans", sans-serif;
 }
 
 .App-logo {
@@ -38,4 +39,10 @@
 }
 .error-messge {
   color: red;
+}
+.p-panelmenu .p-panelmenu-header .p-panelmenu-header-content {
+  background: none;
+}
+.p-panelmenu .p-panelmenu-content {
+  background: none;
 }
